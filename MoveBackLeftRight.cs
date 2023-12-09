@@ -8,7 +8,6 @@ public class MoveScript : MonoBehaviour
     public float rotationSpeed = 45f;
 
     public GameObject RefCamera;
-
     void Update()
     {
         float horizontalInput = 0f;
@@ -40,9 +39,18 @@ public class MoveScript : MonoBehaviour
 
 
 
-
-        float moveCamer = transform.position.z - 10f;
-        RefCamera.transform.position = new Vector3(0, 5f, moveCamer);
-
+        if (Input.GetKey("t"))
+        {
+            float moveBack = transform.position.z;
+            float leftRight = transform.position.x;
+            RefCamera.transform.position = new Vector3(leftRight, 15f, moveBack);
+            RefCamera.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        }
+        else
+        {
+            float moveCamer = transform.position.z - 10f;
+            RefCamera.transform.position = new Vector3(0, 3f, moveCamer);
+            RefCamera.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
     }
 }
