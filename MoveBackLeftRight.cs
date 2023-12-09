@@ -7,6 +7,7 @@ public class MoveScript : MonoBehaviour
     public float moveSpeed = 5f;
     public float rotationSpeed = 45f;
 
+    public GameObject RefCamera;
 
     void Update()
     {
@@ -36,6 +37,12 @@ public class MoveScript : MonoBehaviour
 
         Vector3 rotation = new Vector3(0, horizontalInput, 0);
         transform.Rotate(rotation * rotationSpeed * Time.deltaTime);
-    }
 
+
+
+
+        float moveCamer = transform.position.z - 10f;
+        RefCamera.transform.position = new Vector3(0, 5f, moveCamer);
+
+    }
 }
