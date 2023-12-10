@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class MoveScript : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float rotationSpeed = 45f;
 
     public GameObject RefCamera;
-
-
     public GameObject food;
 
 
@@ -30,7 +26,7 @@ public class MoveScript : MonoBehaviour
         }
 
         Vector3 movement = new Vector3(0, 0, verticalInput);
-        transform.Translate(movement * moveSpeed * Time.deltaTime);
+        transform.Translate(movement * 5f * Time.deltaTime);
 
         if (Input.GetKey("a"))
         {
@@ -42,15 +38,14 @@ public class MoveScript : MonoBehaviour
         }
 
         Vector3 rotation = new Vector3(0, horizontalInput, 0);
-        transform.Rotate(rotation * rotationSpeed * Time.deltaTime);
+        transform.Rotate(rotation * 45f * Time.deltaTime);
 
 
 
         if (Input.GetKey("t"))
         {
             float moveBack = transform.position.z;
-            float leftRight = transform.position.x;
-            RefCamera.transform.position = new Vector3(leftRight, 15f, moveBack);
+            RefCamera.transform.position = new Vector3(0f, 15f, moveBack);
             RefCamera.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
         else
@@ -68,9 +63,9 @@ public class MoveScript : MonoBehaviour
 
 
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("food"))
+        if (collision.gameObject.tag == "food")
         {
             caryFood();
             foodCarry = true;
