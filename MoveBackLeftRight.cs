@@ -45,7 +45,8 @@ public class MoveScript : MonoBehaviour
         if (Input.GetKey("t"))
         {
             float moveBack = transform.position.z;
-            RefCamera.transform.position = new Vector3(0f, 15f, moveBack);
+            float leftRight = transform.position.x;
+            RefCamera.transform.position = new Vector3(leftRight, 15f, moveBack);
             RefCamera.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
         else
