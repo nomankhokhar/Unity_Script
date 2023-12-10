@@ -8,6 +8,13 @@ public class MoveScript : MonoBehaviour
     public float rotationSpeed = 45f;
 
     public GameObject RefCamera;
+
+
+    public GameObject food;
+
+
+    bool foodCarry = false;
+
     void Update()
     {
         float horizontalInput = 0f;
@@ -49,8 +56,29 @@ public class MoveScript : MonoBehaviour
         else
         {
             float moveCamer = transform.position.z - 10f;
-            RefCamera.transform.position = new Vector3(0, 3f, moveCamer);
+            RefCamera.transform.position = new Vector3(0, 5f, moveCamer);
             RefCamera.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
+
+        if (foodCarry)
+        {
+            caryFood();
+        }
+    }
+
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("food"))
+        {
+            caryFood();
+            foodCarry = true;
+        }
+    }
+
+    void caryFood()
+    {
+        food.transform.position = new Vector3(transform.position.x, 5f, transform.position.z);
     }
 }
