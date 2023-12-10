@@ -4,14 +4,28 @@ using UnityEngine;
 
 public class MoveScript : MonoBehaviour
 {
-
     public GameObject RefCamera;
     public GameObject food;
 
-
     bool foodCarry = false;
+    float timer = 120f; // 2-minute timer
 
     void Update()
+    {
+        if (timer > 0f)
+        {
+            timer -= Time.deltaTime;
+            UpdateMovement();
+            CheckTimer();
+        }
+        else
+        {
+            Debug.Log("Game Over - Time's up!");
+            enabled = false;
+        }
+    }
+
+    void UpdateMovement()
     {
         float horizontalInput = 0f;
         float verticalInput = 0f;
@@ -40,8 +54,6 @@ public class MoveScript : MonoBehaviour
         Vector3 rotation = new Vector3(0, horizontalInput, 0);
         transform.Rotate(rotation * 45f * Time.deltaTime);
 
-
-
         if (Input.GetKey("t"))
         {
             float moveBack = transform.position.z;
@@ -58,22 +70,30 @@ public class MoveScript : MonoBehaviour
 
         if (foodCarry)
         {
-            caryFood();
+            CarryFood();
+        }
+        if (Input.GetKey("l"))
+        {
+            foodCarry = false;
+            food.transform.position = new Vector3(transform.position.x, 4f, transform.position.z + 5);
         }
     }
 
-
+    void CheckTimer()
+    {
+        Debug.Log("Time Remaining: " + timer.ToString("F2"));
+    }
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "food")
         {
-            caryFood();
+            CarryFood();
             foodCarry = true;
         }
     }
 
-    void caryFood()
+    void CarryFood()
     {
         food.transform.position = new Vector3(transform.position.x, 5f, transform.position.z);
     }
